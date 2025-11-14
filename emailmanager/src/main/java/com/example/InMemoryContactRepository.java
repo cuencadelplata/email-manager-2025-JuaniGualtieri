@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.interfaces.ContactRepository;
+import com.example.Interfaces.ContactRepository;
 
 import java.util.*;
 

@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.interfaces.EmailStore;
+import com.example.Interfaces.EmailStore;
 
 import java.util.*;
 
