@@ -13,4 +13,30 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
+    <!-- 🔹 Dependencias -->
+    <dependencies>
+        <!-- JUnit 5 (Jupiter) para tests -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- 🔹 Plugins de build -->
+    <build>
+        <plugins>
+            <!-- Surefire: ejecuta los tests JUnit 5 con `mvn test` -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <useModulePath>false</useModulePath>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
