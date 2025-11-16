@@ -9,8 +9,8 @@ import java.util.function.Predicate;
 <span class="fc" id="L9">    private final List&lt;Contacto&gt; lista = new ArrayList&lt;&gt;();</span>
 
     public void agregar(Contacto c) {
-<span class="pc bpc" id="L12" title="1 of 2 branches missed.">        if (c == null) throw new IllegalArgumentException(&quot;Destinatario nulo&quot;);</span>
-<span class="pc bpc" id="L13" title="1 of 2 branches missed.">        if (!lista.contains(c)) lista.add(c);</span>
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        if (c == null) throw new IllegalArgumentException(&quot;Destinatario nulo&quot;);</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        if (!lista.contains(c)) lista.add(c);</span>
 <span class="fc" id="L14">    }</span>
 
 <span class="fc" id="L16">    public boolean esVacia() { return lista.isEmpty(); }</span>

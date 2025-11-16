@@ -23,11 +23,11 @@ public class Email {
 <span class="fc" id="L23">    public boolean isLeido() { return leido; }</span>
 <span class="fc" id="L24">    public boolean isFavorito() { return favorito; }</span>
 
-<span class="pc bpc" id="L26" title="1 of 2 branches missed.">    public void setAsunto(String asunto)   { this.asunto = (asunto == null ? &quot;&quot; : asunto); }</span>
-<span class="pc bpc" id="L27" title="1 of 2 branches missed.">    public void setContenido(String texto) { this.contenido = (texto == null ? &quot;&quot; : texto); }</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">    public void setAsunto(String asunto)   { this.asunto = (asunto == null ? &quot;&quot; : asunto); }</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">    public void setContenido(String texto) { this.contenido = (texto == null ? &quot;&quot; : texto); }</span>
 
     public void setRemitente(Contacto remitente) {
-<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        if (remitente == null) throw new IllegalArgumentException(&quot;Remitente obligatorio&quot;);</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (remitente == null) throw new IllegalArgumentException(&quot;Remitente obligatorio&quot;);</span>
 <span class="fc" id="L31">        this.remitente = remitente;</span>
 <span class="fc" id="L32">    }</span>
 
@@ -37,7 +37,7 @@ public class Email {
 <span class="fc" id="L37">    public void marcarFavorito(boolean v) { this.favorito = v; }</span>
 
     @Override public String toString() {
-<span class="nc" id="L40">        return &quot;Email{asunto='&quot; + asunto + &quot;', de=&quot; + remitente + &quot;, para=&quot; + destinatarios.ver() + &quot;}&quot;;</span>
+<span class="fc" id="L40">        return &quot;Email{asunto='&quot; + asunto + &quot;', de=&quot; + remitente + &quot;, para=&quot; + destinatarios.ver() + &quot;}&quot;;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

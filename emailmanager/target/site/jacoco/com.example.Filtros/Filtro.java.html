@@ -13,15 +13,15 @@ public class Filtro implements SearchSpecification {
     private final Predicate&lt;Email&gt; criterio;
 
 <span class="fc" id="L15">    public Filtro(String nombre, Predicate&lt;Email&gt; criterio) {</span>
-<span class="pc bpc" id="L16" title="2 of 4 branches missed.">        if (nombre == null || nombre.isBlank()) throw new IllegalArgumentException(&quot;Nombre de filtro vacío&quot;);</span>
-<span class="pc bpc" id="L17" title="1 of 2 branches missed.">        if (criterio == null) throw new IllegalArgumentException(&quot;Criterio nulo&quot;);</span>
+<span class="pc bpc" id="L16" title="1 of 4 branches missed.">        if (nombre == null || nombre.isBlank()) throw new IllegalArgumentException(&quot;Nombre de filtro vacío&quot;);</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        if (criterio == null) throw new IllegalArgumentException(&quot;Criterio nulo&quot;);</span>
 <span class="fc" id="L18">        this.nombre = nombre;</span>
 <span class="fc" id="L19">        this.criterio = criterio;</span>
 <span class="fc" id="L20">    }</span>
 
 <span class="nc" id="L22">    public String getNombre() { return nombre; }</span>
 
-<span class="nc" id="L24">    @Override public boolean matches(Email e) { return criterio.test(e); }</span>
+<span class="fc" id="L24">    @Override public boolean matches(Email e) { return criterio.test(e); }</span>
 
     public List&lt;Email&gt; aplicar(List&lt;Email&gt; emails) {
 <span class="fc" id="L27">        return emails.stream().filter(criterio).collect(Collectors.toList());</span>
@@ -50,9 +50,9 @@ public class Filtro implements SearchSpecification {
     }
 
     private static String normalizarDominio(String dominio) {
-<span class="pc bpc" id="L53" title="2 of 4 branches missed.">        if (dominio == null || dominio.isBlank()) return &quot;&quot;;</span>
+<span class="pc bpc" id="L53" title="1 of 4 branches missed.">        if (dominio == null || dominio.isBlank()) return &quot;&quot;;</span>
 <span class="fc" id="L54">        String d = dominio.toLowerCase();</span>
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        return d.startsWith(&quot;@&quot;) ? d : &quot;@&quot; + d;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        return d.startsWith(&quot;@&quot;) ? d : &quot;@&quot; + d;</span>
         }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

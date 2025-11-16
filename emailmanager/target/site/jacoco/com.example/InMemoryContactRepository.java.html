@@ -15,10 +15,10 @@ import java.util.*;
 
     @Override public void editar(String emailClave, String nuevoNombre, String nuevoEmail) {
 <span class="pc bpc" id="L17" title="1 of 2 branches missed.">        Contacto actual = porEmail.get(emailClave == null ? &quot;&quot; : emailClave.toLowerCase());</span>
-<span class="pc bpc" id="L18" title="1 of 2 branches missed.">        if (actual == null) throw new NoSuchElementException(&quot;No existe: &quot; + emailClave);</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        if (actual == null) throw new NoSuchElementException(&quot;No existe: &quot; + emailClave);</span>
 
-<span class="pc bpc" id="L20" title="2 of 4 branches missed.">        if (nuevoNombre != null &amp;&amp; !nuevoNombre.isBlank()) actual.setNombre(nuevoNombre);</span>
-<span class="pc bpc" id="L21" title="3 of 6 branches missed.">        if (nuevoEmail != null &amp;&amp; !nuevoEmail.isBlank() &amp;&amp; !nuevoEmail.equalsIgnoreCase(emailClave)) {</span>
+<span class="pc bpc" id="L20" title="1 of 4 branches missed.">        if (nuevoNombre != null &amp;&amp; !nuevoNombre.isBlank()) actual.setNombre(nuevoNombre);</span>
+<span class="pc bpc" id="L21" title="2 of 6 branches missed.">        if (nuevoEmail != null &amp;&amp; !nuevoEmail.isBlank() &amp;&amp; !nuevoEmail.equalsIgnoreCase(emailClave)) {</span>
 <span class="fc" id="L22">            porEmail.remove(emailClave.toLowerCase());</span>
 <span class="fc" id="L23">            actual.setEmail(nuevoEmail);</span>
 <span class="fc" id="L24">            porEmail.put(actual.getEmail(), actual);</span>
@@ -30,11 +30,11 @@ import java.util.*;
 <span class="fc" id="L30">    }</span>
 
     @Override public Optional&lt;Contacto&gt; porEmail(String email) {
-<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (email == null) return Optional.empty();</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (email == null) return Optional.empty();</span>
 <span class="fc" id="L34">        return Optional.ofNullable(porEmail.get(email.toLowerCase()));</span>
     }
 
-<span class="nc" id="L37">    @Override public List&lt;Contacto&gt; listar() { return new ArrayList&lt;&gt;(porEmail.values()); }</span>
+<span class="fc" id="L37">    @Override public List&lt;Contacto&gt; listar() { return new ArrayList&lt;&gt;(porEmail.values()); }</span>
 
 <span class="fc" id="L39">    @Override public int cantidad() { return porEmail.size(); }</span>
 }

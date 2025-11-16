@@ -1,4 +1,5 @@
 com\example\RF02_EnvioCorreosTest.class
+com\example\RF10_ExtrasCoberturaTest.class
 com\example\RF06_BandejasClasificacionTest.class
 com\example\RF09_FavoritosTest.class
 com\example\RF08_LeidoNoLeidoTest.class

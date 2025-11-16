@@ -56,7 +56,7 @@ public class EmailService {
 
     // Búsqueda por texto libre convertida a una Specification simple 
     public List&lt;Email&gt; buscarEnEntradaPorTexto(String texto) {
-<span class="pc bpc" id="L59" title="2 of 4 branches missed.">        if (texto == null || texto.isBlank()) return List.of();</span>
+<span class="fc bfc" id="L59" title="All 4 branches covered.">        if (texto == null || texto.isBlank()) return List.of();</span>
 <span class="fc" id="L60">        final String q = texto.toLowerCase(Locale.ROOT);</span>
 <span class="fc" id="L61">        return buscarEnEntrada(email -&gt; </span>
 <span class="fc bfc" id="L62" title="All 2 branches covered.">            email.getAsunto().toLowerCase().contains(q)</span>
