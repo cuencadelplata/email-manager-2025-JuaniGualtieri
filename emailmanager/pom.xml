@@ -13,9 +13,11 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
-    <!-- 🔹 Dependencias -->
+    <!-- ===========================
+           DEPENDENCIAS
+         =========================== -->
     <dependencies>
-        <!-- JUnit 5 (Jupiter) para tests -->
+        <!-- JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -24,10 +26,13 @@
         </dependency>
     </dependencies>
 
-    <!-- 🔹 Plugins de build -->
+    <!-- ===========================
+           BUILD + PLUGINS
+         =========================== -->
     <build>
         <plugins>
-            <!-- Surefire: ejecuta los tests JUnit 5 con `mvn test` -->
+
+            <!-- Plugin para ejecutar JUnit 5 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -36,6 +41,34 @@
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
+
+            <!-- Plugin Jacoco para cobertura -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.11</version>
+                <executions>
+
+                    <!-- Instrumenta el código antes de correr los tests -->
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- Genera el reporte después de los tests -->
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
