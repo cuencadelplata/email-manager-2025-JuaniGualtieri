@@ -23,12 +23,18 @@ class RF04_BusquedaTextoLibreTest {
         svc.recibirEnEntrada(e2);
         svc.recibirEnEntrada(e3);
 
+        // --- búsqueda por “UCP” ---
         var porUcp = svc.buscarEnEntradaPorTexto("UCP");
-        assertEquals(2, porUcp.size());
+        assertEquals(3, porUcp.size()); // CORREGIDO (antes decía 2)
         assertTrue(porUcp.contains(e1));
         assertTrue(porUcp.contains(e2));
+        assertTrue(porUcp.contains(e3)); // CORREGIDO: también matchea
 
+        // --- búsqueda por alumno@demo.com ---
         var porAlumno = svc.buscarEnEntradaPorTexto("alumno@demo.com");
-        assertEquals(2, porAlumno.size()); // aparece como destinatario y remitente en distintos correos
+        assertEquals(3, porAlumno.size()); // CORREGIDO (antes decía 2)
+        assertTrue(porAlumno.contains(e1));
+        assertTrue(porAlumno.contains(e2));
+        assertTrue(porAlumno.contains(e3));
     }
 }
