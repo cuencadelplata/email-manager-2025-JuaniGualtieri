@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmailService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emailmanager</a> &gt; <a href="index.source.html" class="el_package">com.example</a> &gt; <span class="el_source">EmailService.java</span></div><h1>EmailService.java</h1><pre class="source lang-java linenums">package com.example;
+
+import com.example.Interfaces.EmailStore;
+import com.example.Interfaces.SearchSpecification;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+public class EmailService {
+
+    private final EmailStore store;
+
+<span class="fc" id="L14">    public EmailService(EmailStore store) { this.store = store; }</span>
+
+    // RF-01
+    public Email crear(String asunto, String contenido, Contacto remitente, List&lt;Contacto&gt; destinatarios) {
+<span class="fc" id="L18">        Email e = new Email(asunto, contenido, remitente);</span>
+<span class="pc bpc" id="L19" title="1 of 4 branches missed.">        if (destinatarios != null) for (Contacto c : destinatarios) e.agregarDestinatario(c);</span>
+<span class="fc" id="L20">        return e;</span>
+    }
+
+    // RF-02
+    public void enviar(Email e) {
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (e.getDestinatarios().esVacia())</span>
+<span class="fc" id="L26">            throw new IllegalStateException(&quot;El email debe tener al menos un destinatario&quot;);</span>
+<span class="fc" id="L27">        store.agregar(Bandeja.ENVIADOS, e);</span>
+<span class="fc" id="L28">    }</span>
+
+    // RF-06
+    public void mover(Bandeja origen, Bandeja destino, Email e) {
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        if (store.remover(origen, e)) store.agregar(destino, e);</span>
+<span class="fc" id="L33">    }</span>
+
+<span class="fc" id="L35">    public void restaurarDeEliminados(Email e) { mover(Bandeja.ELIMINADOS, Bandeja.ENTRADA, e); }</span>
+
+    // RF-07
+<span class="fc" id="L38">    public void guardarBorrador(Email e) { store.agregar(Bandeja.BORRADORES, e); }</span>
+
+    // RF-08 / RF-09
+<span class="fc" id="L41">    public void marcarLeido(Email e, boolean v)    { e.marcarLeido(v); }</span>
+<span class="fc" id="L42">    public void marcarFavorito(Email e, boolean v) { e.marcarFavorito(v); }</span>
+
+    // RF-04 — Búsqueda OOP mediante Specification (puede ser un Filtro)
+    public List&lt;Email&gt; buscarEnEntrada(SearchSpecification spec) {
+<span class="fc" id="L46">        List&lt;Email&gt; entrada = store.bandeja(Bandeja.ENTRADA);</span>
+<span class="fc" id="L47">        List&lt;Email&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L48" title="All 4 branches covered.">        for (Email e : entrada) if (spec.matches(e)) result.add(e);</span>
+<span class="fc" id="L49">        return result;</span>
+    }
+
+    // Utilidades para demo/tests
+<span class="fc" id="L53">    public void recibirEnEntrada(Email e) { store.agregar(Bandeja.ENTRADA, e); }</span>
+
+<span class="nc" id="L55">    public List&lt;Email&gt; ver(Bandeja b) { return store.bandeja(b); }</span>
+
+    // Búsqueda por texto libre convertida a una Specification simple 
+    public List&lt;Email&gt; buscarEnEntradaPorTexto(String texto) {
+<span class="pc bpc" id="L59" title="2 of 4 branches missed.">        if (texto == null || texto.isBlank()) return List.of();</span>
+<span class="fc" id="L60">        final String q = texto.toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L61">        return buscarEnEntrada(email -&gt; </span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            email.getAsunto().toLowerCase().contains(q)</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">         || email.getContenido().toLowerCase().contains(q)</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">         || email.getRemitente().getNombre().toLowerCase().contains(q)</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">         || email.getRemitente().getEmail().toLowerCase().contains(q)</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">         || email.getDestinatarios().algunoCumple(c -&gt;</span>
+<span class="pc bpc" id="L67" title="2 of 4 branches missed.">                c.getNombre().toLowerCase().contains(q) || c.getEmail().toLowerCase().contains(q))</span>
+        );
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

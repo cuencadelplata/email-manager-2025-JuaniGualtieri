@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Contacto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emailmanager</a> &gt; <a href="index.source.html" class="el_package">com.example</a> &gt; <span class="el_source">Contacto.java</span></div><h1>Contacto.java</h1><pre class="source lang-java linenums">package com.example;
+
+import java.util.Objects;
+
+public class Contacto {
+    private String nombre;
+    private String email;
+
+<span class="fc" id="L9">    public Contacto(String nombre, String email) {</span>
+<span class="fc" id="L10">        setNombre(nombre);</span>
+<span class="fc" id="L11">        setEmail(email);</span>
+<span class="fc" id="L12">    }</span>
+
+<span class="fc" id="L14">    public String getNombre() { return nombre; }</span>
+<span class="fc" id="L15">    public String getEmail()  { return email; }</span>
+
+    public void setNombre(String nombre) {
+<span class="pc bpc" id="L18" title="2 of 4 branches missed.">        if (nombre == null || nombre.isBlank())</span>
+<span class="nc" id="L19">            throw new IllegalArgumentException(&quot;El nombre no puede estar vacío&quot;);</span>
+<span class="fc" id="L20">        this.nombre = nombre;</span>
+<span class="fc" id="L21">    }</span>
+
+    public void setEmail(String email) {
+<span class="pc bpc" id="L24" title="3 of 6 branches missed.">        if (email == null || email.isBlank() || !email.contains(&quot;@&quot;))</span>
+<span class="nc" id="L25">            throw new IllegalArgumentException(&quot;Email inválido&quot;);</span>
+<span class="fc" id="L26">        this.email = email.toLowerCase();</span>
+<span class="fc" id="L27">    }</span>
+
+    @Override public boolean equals(Object o) {
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (!(o instanceof Contacto)) return false;</span>
+<span class="fc" id="L32">        return Objects.equals(email, ((Contacto) o).email);</span>
+    }
+
+<span class="nc" id="L35">    @Override public int hashCode() { return Objects.hash(email); }</span>
+
+<span class="nc" id="L37">    @Override public String toString() { return nombre + &quot; &lt;&quot; + email + &quot;&gt;&quot;; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

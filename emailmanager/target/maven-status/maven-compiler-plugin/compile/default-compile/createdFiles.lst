@@ -1,0 +1,11 @@
+com\example\InMemoryEmailStore.class
+com\example\Interfaces\SearchSpecification.class
+com\example\InMemoryContactRepository.class
+com\example\Bandeja.class
+com\example\Interfaces\ContactRepository.class
+com\example\Contacto.class
+com\example\Filtros\Filtro.class
+com\example\Interfaces\EmailStore.class
+com\example\Email.class
+com\example\EmailService.class
+com\example\Destinatarios.class
