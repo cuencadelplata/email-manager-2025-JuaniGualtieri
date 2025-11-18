@@ -10,7 +10,7 @@ class RF08_LeidoNoLeidoTest {
     @Test
     void marcarComoLeidoYNoLeido() {
         // Servicio con store en memoria
-        EmailService svc = new EmailService(new InMemoryEmailStore());
+        EmailService svc = new EmailService(new InMemoryEmailStore()); // se crea el servicio y se inyecta store en memoria
 
         // Creamos un email (remitente + 1 destinatario)
         Email e = svc.crear(
