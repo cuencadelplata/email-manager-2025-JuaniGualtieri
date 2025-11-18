@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// RF10 – Tests extra para aumentar la cobertura (Filtro, Contacto, Repositorios, etc.)
 class RF10_ExtrasCoberturaTest {
 
     // =========================
@@ -22,18 +23,22 @@ class RF10_ExtrasCoberturaTest {
         Contacto remitente = new Contacto("Juan", "juan@demo.com");
         Email e = new Email("Hola mundo", "contenido", remitente);
 
+        // Filtro cuyo criterio debe matchear el asunto
         Filtro filtro = Filtro.asuntoContiene("Hola");
         assertTrue(filtro.matches(e));
 
+        // En este caso no debería matchear
         Filtro filtroNo = Filtro.asuntoContiene("XYZ");
         assertFalse(filtroNo.matches(e));
     }
 
     @Test
     void filtroConstructorDebeValidarNombreYCriterio() {
+        // Nombre vacío -> error
         assertThrows(IllegalArgumentException.class,
                 () -> new Filtro("", email -> true));
 
+        // Criterio null -> error
         assertThrows(IllegalArgumentException.class,
                 () -> new Filtro("Filtro sin criterio", null));
     }
@@ -46,7 +51,7 @@ class RF10_ExtrasCoberturaTest {
         Email e1 = new Email("x", "y", c1);
         Email e2 = new Email("x", "y", c2);
 
-        // dominio sin @  -> agrega @
+        // dominio sin @  -> el filtro lo normaliza agregando @
         Filtro f1 = Filtro.remitenteDominio("ucp.edu.ar");
         assertTrue(f1.matches(e1));
         assertFalse(f1.matches(e2));
@@ -56,7 +61,7 @@ class RF10_ExtrasCoberturaTest {
         assertTrue(f2.matches(e2));
         assertFalse(f2.matches(e1));
 
-        // dominio nulo / vacío -> termina en "" => siempre true
+        // dominio nulo / vacío -> filtro trivial (siempre true)
         Filtro f3 = Filtro.remitenteDominio(null);
         assertTrue(f3.matches(e1));
         assertTrue(f3.matches(e2));
@@ -72,13 +77,15 @@ class RF10_ExtrasCoberturaTest {
         Contacto c2 = new Contacto("Ana Maria", "ana@demo.com"); // mismo mail
         Contacto c3 = new Contacto("Ana", "otra@demo.com");
 
-        assertEquals(c1, c2);          // mismo email
-        assertNotEquals(c1, c3);       // distinto email
+        // equals basado en email
+        assertEquals(c1, c2);
+        assertNotEquals(c1, c3);
         assertNotEquals(c1, "otra cosa");
 
         // hashCode consistente con equals
         assertEquals(c1.hashCode(), c2.hashCode());
 
+        // toString debe contener nombre y email
         String texto = c1.toString();
         assertTrue(texto.contains("Ana"));
         assertTrue(texto.contains("ana@demo.com"));
@@ -94,6 +101,7 @@ class RF10_ExtrasCoberturaTest {
         c.setEmail("nuevo@demo.com");
         assertEquals("nuevo@demo.com", c.getEmail());
 
+        // Casos inválidos
         assertThrows(IllegalArgumentException.class, () -> c.setNombre("   "));
         assertThrows(IllegalArgumentException.class, () -> c.setEmail("sin-arroba"));
         assertThrows(IllegalArgumentException.class, () -> c.setEmail("   "));
@@ -160,8 +168,9 @@ class RF10_ExtrasCoberturaTest {
         Contacto c1 = new Contacto("Nombre1", "igual@demo.com");
         Contacto c2 = new Contacto("Nombre2", "igual@demo.com");
 
+        // Al agregar dos veces el mismo email, el segundo reemplaza al primero
         repo.agregar(c1);
-        repo.agregar(c2); // mismo email, reemplaza
+        repo.agregar(c2);
 
         assertEquals(1, repo.cantidad());
         assertEquals("Nombre2", repo.porEmail("igual@demo.com").get().getNombre());
@@ -176,21 +185,21 @@ class RF10_ExtrasCoberturaTest {
         Contacto remitente = new Contacto("Rem", "rem@demo.com");
         Email e = new Email("Asunto", "Contenido", remitente);
 
-        // setAsunto / setContenido con null -> string vacío
+        // Null en asunto/contenido se normaliza a "" (string vacío)
         e.setAsunto(null);
         e.setContenido(null);
         assertEquals("", e.getAsunto());
         assertEquals("", e.getContenido());
 
-        // setRemitente válido
+        // Cambiamos remitente por uno válido
         Contacto nuevo = new Contacto("Nuevo", "nuevo@demo.com");
         e.setRemitente(nuevo);
         assertEquals(nuevo, e.getRemitente());
 
-        // setRemitente null -> error
+        // setRemitente null -> debe lanzar excepción
         assertThrows(IllegalArgumentException.class, () -> e.setRemitente(null));
 
-        // toString al menos no rompe y contiene datos básicos
+        // toString no debe romper y debe mencionar la palabra "Email"
         String s = e.toString();
         assertTrue(s.contains("Email"));
     }
@@ -202,6 +211,8 @@ class RF10_ExtrasCoberturaTest {
     @Test
     void destinatariosEsVaciaYNoDuplica() {
         Destinatarios dest = new Destinatarios();
+
+        // Lista vacía al inicio
         assertTrue(dest.esVacia());
 
         Contacto a = new Contacto("Ana", "ana@demo.com");
@@ -209,11 +220,11 @@ class RF10_ExtrasCoberturaTest {
         assertFalse(dest.esVacia());
         assertEquals(1, dest.ver().size());
 
-        // agregar duplicado no aumenta tamaño
+        // Agregar el mismo contacto no debe duplicarlo
         dest.agregar(a);
         assertEquals(1, dest.ver().size());
 
-        // agregar null -> excepción
+        // Agregar null debe lanzar excepción
         assertThrows(IllegalArgumentException.class, () -> dest.agregar(null));
     }
 
@@ -226,10 +237,10 @@ class RF10_ExtrasCoberturaTest {
         EmailStore store = new InMemoryEmailStore();
         EmailService svc = new EmailService(store);
 
-        // null -> lista vacía
+        // Texto null -> lista vacía
         assertTrue(svc.buscarEnEntradaPorTexto(null).isEmpty());
 
-        // blanco -> lista vacía
+        // Texto en blanco -> lista vacía
         assertTrue(svc.buscarEnEntradaPorTexto("   ").isEmpty());
     }
 
@@ -238,15 +249,16 @@ class RF10_ExtrasCoberturaTest {
         EmailStore store = new InMemoryEmailStore();
         EmailService svc = new EmailService(store);
 
+        // Preparamos un correo en ENTRADA
         Contacto c = new Contacto("A", "a@demo.com");
         Email e1 = svc.crear("x", "y", c, List.of());
         svc.recibirEnEntrada(e1);
 
-        // specification que nunca matchea
+        // specification que nunca matchea → resultado vacío
         SearchSpecification specFalse = email -> false;
         assertTrue(svc.buscarEnEntrada(specFalse).isEmpty());
 
-        // specification que siempre matchea
+        // specification que siempre matchea -> debe devolver 1 correo
         SearchSpecification specTrue = email -> true;
         assertEquals(1, svc.buscarEnEntrada(specTrue).size());
     }
