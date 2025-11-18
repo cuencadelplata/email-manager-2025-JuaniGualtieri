@@ -12,8 +12,8 @@ class RF09_FavoritosTest {
     @Test
     void marcarFavoritoYBuscarFavoritosEnEntrada() {
         // Store en memoria y servicio
-        InMemoryEmailStore store = new InMemoryEmailStore();
-        EmailService svc = new EmailService(store);
+        InMemoryEmailStore store = new InMemoryEmailStore(); // store en memoria donde se guardan las bandejas
+        EmailService svc = new EmailService(store); //servicio principal con inyeccion de store
 
         // Remitente y dos destinatarios
         Contacto r = new Contacto("R","r@demo.com");
